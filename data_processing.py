@@ -46,7 +46,7 @@ def process_data(file_path, column_list, drop_na_column):
         logger.info(f"Dropped rows with missing values in column '{drop_na_column}'")
         df[drop_na_column] = pd.to_numeric(df[drop_na_column], errors="raise")
         logger.info(f"Column '{drop_na_column}' converted to numeric")
-
+        logger.info(f'Processed data:\n{df.head()}')
     else:
         raise KeyError(f"Column '{drop_na_column}' does not exist in the data")
 
@@ -82,13 +82,10 @@ def main():
         logger.info("Starting data processing....")
         df = process_data(file_path, columns_list, drop_na_column)
 
-        if df is not None:
-            logger.info("Data processing completed successfully")
-        else:
-            logger.warning("Data processing failed")
-
     except Exception as e:
-        logger.error(f"Error in main function: {e}")
+        logger.error(f"Error in main function")
+    else:
+        logger.info("Data processing completed successfully")
     finally:
         logger.info("Main function execution completed")
 

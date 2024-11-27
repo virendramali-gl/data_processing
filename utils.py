@@ -30,14 +30,19 @@ def handle_exceptions(func):
             return func(*args, **kwargs)
         except FileNotFoundError as fnf_error:
             logger.error(f"File not found: {fnf_error}")
+            raise fnf_error
         except KeyError as key_error:
             logger.error(f"Missing required columns: {key_error}")
+            raise key_error
         except pd.errors.EmptyDataError:
             logger.error("File is empty.")
+            raise
         except ValueError as value_error:
             logger.error(f"Invalid value: {value_error}")
+            raise value_error
         except Exception as e:
             logger.error(f"An unexpected error occurred: {e}")
+            raise
         else:
             logger.info("Function executed successfully.")
         finally:
